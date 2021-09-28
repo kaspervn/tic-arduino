@@ -344,6 +344,7 @@ public:
   /// See also getTargetPosition().
   void setTargetPosition(int32_t position)
   {
+    target_position = position;
     commandW32(TicCommand::SetTargetPosition, position);
   }
 
@@ -1275,6 +1276,11 @@ public:
     return _lastError;
   }
 
+  bool isAtTarget()
+  {
+      return target_position == getCurrentPosition();
+  }
+
 protected:
   /// Zero if the last communication with the device was successful, non-zero
   /// otherwise.
@@ -1355,6 +1361,7 @@ private:
     uint8_t length, void * buffer);
 
   TicProduct product = TicProduct::Unknown;
+  int32_t target_position = 0;
 };
 
 /// Represents a serial connection to a Tic.
