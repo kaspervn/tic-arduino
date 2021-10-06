@@ -38,6 +38,9 @@ static const uint16_t Tic03aCurrentTable[33] =
   3093,
 };
 
+TicBase::~TicBase() = default;
+TicSerial::~TicSerial() = default;
+
 void TicBase::setCurrentLimit(uint16_t limit)
 {
   uint8_t code = 0;

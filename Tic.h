@@ -312,6 +312,8 @@ enum class TicHpDriverError
 class TicBase
 {
 public:
+    virtual ~TicBase();
+
   /// You can use this function to specify what type of Tic you are using.
   ///
   /// Example usage (pick one of the following):
@@ -1281,6 +1283,7 @@ public:
       return target_position == getCurrentPosition();
   }
 
+
 protected:
   /// Zero if the last communication with the device was successful, non-zero
   /// otherwise.
@@ -1358,7 +1361,7 @@ private:
   virtual void commandW32(TicCommand cmd, uint32_t val) = 0;
   virtual void commandW7(TicCommand cmd, uint8_t val) = 0;
   virtual void getSegment(TicCommand cmd, uint8_t offset,
-    uint8_t length, void * buffer);
+    uint8_t length, void * buffer) = 0;
 
   TicProduct product = TicProduct::Unknown;
   int32_t target_position = 0;
@@ -1370,6 +1373,9 @@ private:
 class TicSerial : public TicBase
 {
 public:
+
+  virtual ~TicSerial();
+
   /// Creates a new TicSerial object.
   ///
   /// The `stream` argument should be a hardware or software serial object.
@@ -1441,6 +1447,8 @@ public:
   /// Gets the I2C address specified in the constructor.
   uint8_t getAddress() { return _address; }
 
+
+
 private:
   const uint8_t _address;
 
@@ -1450,4 +1458,5 @@ private:
   void getSegment(TicCommand cmd, uint8_t offset,
     uint8_t length, void * buffer);
   void delayAfterRead();
+
 };
